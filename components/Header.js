@@ -1,9 +1,9 @@
-import { Modal } from "antd";
 import React from "react";
 import { useState, useEffect } from "react";
 import reactDom from "react-dom";
-import Button from "./Button";
+import Btn from "./Btn";
 import OpenClose from "./OpenClose";
+import { Button, Typography, Modal, Box as div } from "@mui/material";
 
 // const customStyles = {
 //   content: {
@@ -18,45 +18,42 @@ import OpenClose from "./OpenClose";
 
 // Modal.setAppElement("#root");
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const buttonsTitle = [
+  "My store",
+  "Prices",
+  "On-Demand",
+  "Live Classes",
+  "Testimonials",
+  "Contact",
+];
+
 function Header() {
   const [menu, setMenu] = useState(true);
   const [isActive, setActive] = useState(false);
 
   const [ok, setOk] = useState(false);
-  //   let subtitle;
-  //   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  // Antd Modal
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  function handleModal() {
-    !ok ? setOk(false) : setOk(true);
-    menu ? setMenu(false) : setMenu(true);
-    !isModalVisible ? setIsModalVisible(true) : setIsModalVisible(false);
-    console.log("menu ->", menu, "isModalVisible =>", isModalVisible);
-    // console.log("before", modalIsOpen);
-    // !modalIsOpen ? setIsOpen(true) : setIsOpen(false);
-    // console.log("after", modalIsOpen);
-  }
-
-  //   function openModal() {
-  //     setIsOpen(true);
-  //   }
-  //   function afterOpenModal() {
-  // references are now sync'd and can be accessed.
-  // subtitle.style.color = "#f00";
-  //   }
-  //   function closeModal() {
-  //     setIsOpen(false);
-  //   }
-
-  //   function handleMenu() {
-  //     console.log("test");
-  //     isActive ? setActive(false) : setActive(true);
-  //   }
+  // MUI Modal
+  const [open, setOpen] = React.useState(false);
+  const handleModal = () => {
+    console.log("test");
+    !open ? setOpen(true) : setOpen(false);
+  };
 
   return (
-    <header className="container mx-auto">
+    <header className=""> 
       <nav className="flex justify-between">
         <div className="flex items-end">
           <div className="h-16 w-16">
@@ -72,45 +69,33 @@ function Header() {
           </div>
         </div>
 
-        {/* <Modal
-          title="Basic Modal"
-          visible={isModalVisible}
-          onCancel={() => setOk(false)}
-          footer={null}
-
-          //   isOpen={modalIsOpen}
-          //   onAfterOpen={afterOpenModal}
-          //   onRequestClose={closeModal}
-          //   style={customStyles}
-          //   contentLabel="Example Modal"
-        > */}
-
         <Modal
-          visible={isModalVisible}
-          onOk={handleModal}
+          open={open}
+          onClose={handleModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-            <div>Test content</div>
-            <div>Test content</div>
-            <div>Test content</div>
-            <div>Test content</div>
-          {/* <Button title="My Story" />
-          <Button title="Prices" />
-          <Button title="On-Demand" />
-          <Button title="Live Classes" />
-          <Button title="Testimonials" />
-          <Button title="Contact" /> */}
-        </Modal>
+          <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white p-2 border-2 border-black shadow-2xl max-w-sm w-11/12 sm:w-full rounded ">
+            {/* <Typography id="modal-modal-title" variant="h6" component="h2">
+              Text in a modal
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography> */}
 
-        <div className="md:flex hidden justify-center">
-          <Button title="My Story" />
-          <Button title="Prices" />
-          <Button title="On-Demand" />
-          <Button title="Live Classes" />
-          <Button title="Testimonials" />
-          <Button title="Contact" />
-        </div>
-        <div onClick={handleModal}>
-          <OpenClose />
+            {buttonsTitle.map((btn, i) => (
+              <Btn title={btn} key={i} />
+            ))}
+          </div>
+        </Modal>
+        <Button onClick={handleModal}>
+          <OpenClose open={open} setOpen={setOpen} />
+        </Button>
+
+        <div className="lg:flex hidden justify-center">
+          {buttonsTitle.map((btn, i) => (
+            <Btn title={btn} key={i} />
+          ))}
         </div>
       </nav>
     </header>

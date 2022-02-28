@@ -1,26 +1,19 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { FaBars } from "react-icons/fa";
 
-function OpenClose() {
+function OpenClose(props) {
   const [menu, setMenu] = useState(true);
 
-  function handleBars() {
-    if (menu) {
-      setMenu(false);
-    }
-    if (!menu) {
-      setMenu(true);
-    }
-  }
+  const handleBars = () => (!menu ? setMenu(true) : setMenu(false));
 
-  if (menu)
+  if (!props.open)
     return (
       <div>
         <FaBars
           onClick={handleBars}
-          className="md:hidden text-white bg-black text-3xl flex m-1 cursor-pointer hover:text-black hover:bg-white duration-300"
+          className="lg:hidden text-white bg-black text-3xl flex m-1 cursor-pointer hover:text-black hover:bg-white duration-300"
         />
       </div>
     );
@@ -29,7 +22,7 @@ function OpenClose() {
     <div>
       <MdOutlineClose
         onClick={handleBars}
-        className="md:hidden text-white bg-black rounded-full text-3xl flex m-1 cursor-pointer hover:animate-spin hover:text-black hover:bg-white duration-300"
+        className="lg:hidden text-white bg-black rounded-full text-3xl flex m-1 cursor-pointer hover:animate-spin hover:text-black hover:bg-white duration-300"
       />
     </div>
   );
